@@ -9,6 +9,14 @@
 
 <body>
 
+  <main>
+    <article>
+      <div class="pic"><img></div>
+      <h2>사람이름</h2>
+      <p>직책</p>
+    </article>
+  </main>
+
 
   <script>
     //JSON : 데이터 전달을 목적으로 하는 특정 언어에 종속되지 않는(어떤 언어에서도 쓸 수 있음) 문자열 형태의 자바스크립트 자료 구조 (Just 자료전달)
@@ -25,13 +33,13 @@
     fetch('member.json') // 데이터 요청후 동기적으로 반환
       .then(data => data.json()) // 반환된 데이터를 다시 json()으로 parsing해서 다시 반환
       .catch(err => console.log(err)) // 데이터 반환에 실패하면 해당 구문 호출되고 종료. catch문 생략할 수 있는 상황엔 생략 가능
-      .then(json => console.log(json)); // 1번째 then 구문에서 파싱을 성공하면 동기적으로 호출
-
-
-
-    //에러일 땐 catch가 나오고 성립할땐 then이 나옴
-
-
+      .then(json => {
+        console.log(json.menbers);
+        json.members.forEach((data) => {
+          console.log(data.name);
+          // 해당 위치에서 반복돌며 위의 html 구조 반복 생성
+        })
+      });
 
   </script>
 
