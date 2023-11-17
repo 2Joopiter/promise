@@ -36,22 +36,21 @@
     fetch('member.json') // 데이터 요청후 동기적으로 반환
       .then(data => data.json()) // 반환된 데이터를 다시 json()으로 parsing해서 다시 반환
       .catch(err => console.log(err)) // 데이터 반환에 실패하면 해당 구문 호출되고 종료. catch문 생략할 수 있는 상황엔 생략 가능
-      .then(json => {
-        console.log(json.menbers);
-        let tags = '';
+      .then(json => createDOM(json.members));
 
-        json.members.forEach((data, idx) => {
-          console.log(data.name);
-          tags += `
+    function createDOM(arr) {
+      let tags = '';
+      arr.forEach((data) => {
+        tags += `
           <article>
       <div class="pic"><img src=${data.pic}></div>
       <h2>${data.name}</h2>
       <p>${data.position}</p>
     </article>
           `
-        })
-        main.innerHTML = tags;
-      });
+      })
+      main.innerHTML = tags;
+    }
 
 
   </script>
