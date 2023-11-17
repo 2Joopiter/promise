@@ -9,40 +9,31 @@
 
 <body>
 
+
   <script>
+    /*
+    ES6부터 promise라는 동기화 처리를 위한 특별한 생성자 함수가 추가
+    promise는 일반 인스턴트 객체와는 다르게 생성시점에 값이 정해지는 것이 아닌 상태값 3가지를 품은 상태에서 반환됨
+    추후에 그 상대값 변화단계에 따라 각각에 등록된 메서드가 동기적으로 실행되는 방식
+
+    promise의 3가지 상태
+    [pending]: 대기. 특정 요청이 들어간 이후 그 요청이 수행될때까지의 대기상태
+      // 이후 상태는 수행된 후의 상태
+    [fulfilled]: 요청이 성공적으로 수행완료된 상태
+    [rejected]: 요청이 실패해서 수행완료된 상태
+
+    promise 인스턴트를 생성해야되는 대표적인 경우
+    - 외부 데이터를 가지고 올때까지 다음 업무를 홀딩(holding)시키면서 강제 동기화 처리 해야하는 경우
+    - 코드 내부적으로 setTimeout같은 지연시간이 발생하는 코드인 경우 해당 코드가 끝날때까지 홀딩시키면서 동기화 처리해야하는 경우
+
+
+    */
+
     function test(delay, callback) {
       setTimeout(() => {
         callback();
       }, delay)
     }
-
-    // 수행할 미션: -start, 2초 뒤에 test1 콘솔, 다시 2초뒤에 test2, 다음 end
-
-    // 순서1 : start 출력 (callstack)
-    console.log('start');
-
-    // 순서2 : 첫번째 test함수 호출 (callstack)
-    // 순서3 : setTimeout을 web api에 전달 (callstack)
-
-
-    test(2000, () => {
-      // 순서4 : setTimeout 호출하고 그 안쪽에 구문을 다시 callstack에 전달(web api)
-      // 순서5 : web api로부터 setTimeout 안쪽의 callback 함수를 전달받고 호출 (callstack)
-      console.log('test1');
-
-      // 순서6 : 다시 두번째 test함수 호출하고 안쪽의 setTimeout을 다시 web api에 전달 (callstack)
-      // 순서7 : setTimeout을 수행하고 아래쪽의 callback으로 전달된 구문을 다시 callstack에 전달 (web api)
-      // 순서8 : 아래 구문을 실행하고 종료
-      test(2000, () => {
-        console.log('test2');
-        console.log('end');
-      })
-    })
-
-
-
-    // 뒤에 실행될 개별의 함수가 없게끔 하나의 callback 함수로 묶어버리면 됨 (기다리는 함수가 없게끔)
-
 
 
   </script>
