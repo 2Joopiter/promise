@@ -40,12 +40,17 @@
       return new promise((res, rej) => {
         setTimeout(() => {
           console.log('특정 로직이 성공적으로 수행되었을 때 실행할 구문')
-          res(); // 해당 생성자로 생성된 인스턴스 객체에는 .then 메서드를 동기적으로 호출할 시점을 정할 수 있음
+          //isSuccess의 상태에 따라 res, rej가 분기 호출 됨
+          isSuccess ? res('success') /*fullfiled 실행시점*/ : rej('fall'); /*rejected 실행시점 */;
         }, time)
       })
     }
 
-    delay(3000), then(() => console.log('동기적으로 실행할 코드'))
+    //promise의 변화되는 상태에 따라 then, catch 동기적으로 호출 가능
+    const p2 = delay(3000, false).then((data) => console.log(data)).catch(err => console.error(err));
+
+
+
 
     // promise 안에 넣어서 무한 callback 지옥을 방지하는거임
 
